@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+import uuid
 
 class AccountManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -18,13 +19,14 @@ class AccountManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 class Account(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(max_length=30, unique=True, verbose_name="Username")
     email = models.EmailField(max_length=60, unique=True, verbose_name="Email Address")
     employee_number = models.CharField(max_length=50, blank=True, verbose_name="Employee Number")
     first_name = models.CharField(max_length=50, blank=True, verbose_name="First Name")
     middle_name = models.CharField(max_length=50, blank=True, verbose_name="Middle Name")
     last_name = models.CharField(max_length=50, blank=True, verbose_name="Last Name")    
-    birth_ddate = models.DateField(verbose_name="Birt Date")
+    birth_date = models.DateField(blank=True, null=True, verbose_name="Birth Date")
     home_street_address = models.CharField(max_length=255, blank=True, verbose_name="Home Street Address")
     municipality = models.CharField(max_length=50, blank=True, verbose_name="Municipality")
     province = models.CharField(max_length=50, blank=True, verbose_name="Province")    
