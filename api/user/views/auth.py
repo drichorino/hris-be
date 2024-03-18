@@ -28,7 +28,7 @@ class AuthView(APIView):
                 return success_response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
-                }, "Login successful")
+                }, "Login successful.")
             else:
                 return error_response("This account is inactive.", error_type="forbidden")
         return error_response("Invalid credentials provided.", error_type="unauthorized")
